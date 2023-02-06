@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 기초 익히기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ nextYear('안녕하세요') }}  <br> <!-- 인자(argument) : 함수를 사용할때 넣어주는 값 -->
+
+        <input v-bind:type="type" :value="inputData"> <br>
+
+        <a :href="getLink('w66Q927JZAM')">서강준 정글의 법칙 레전드</a> <br>
+        
+        {{ year }} <br>
+        <button v-on:click="plus">더하기</button>
+        <button v-on:click="minus">빼기</button> <br>
+        <button v-on:click="alert">Click Me</button> <br>
+
+        <form v-on:submit.prevent="submit"> <!-- 이벤트 수식어 -->
+            <input type="text"> <br>
+            <button type="submit">Submit</button>
+        </form>
+
+        <form v-on:submit.prevent="submit">
+            <!-- <input type="text" :value="text" @keyup="updateText"> <br> -->
+            <input type="text" v-model="text"> <br>
+            {{ text }} <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                person: {
+                    name: '서강준',
+                    age: 32
+                },
+                inputData: 'hello',
+                type: 'text',
+                link: 'https://youtu.be/',
+                year: 2023,
+                text: 'text'
+            },
+            methods: {
+                // 함수 사용시 :function 생략 가능
+                getLink(channel) {
+                    return this.link + channel;
+                },
+                nextYear(greeting) {// 매개변수(parameter) 받아서 사용 가능
+                    return greeting + '! ' + this.person.name + '은 내년에 ' + (this.person.age + 1) + '살 입니다';
+                },
+                otherMethod: function() {
+                    this.nextYear(); // 다른함수에서 this.함수로 사용 가능함
+                },
+                alert() {
+                    alert('hello world');
+                },
+                plus() {
+                    this.year ++;
+                },
+                minus() {
+                    this.year --;
+                },
+                submit() {
+                    alert('submitted');
+                    console.log('hello');
+                },
+                // updateText(event) {
+                //     this.text = event.target.value;
+                //     console.log(event);
+                // }
+            }
+        })
+    </script>
+</body>
+</html>
