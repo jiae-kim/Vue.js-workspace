@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 기초 익히기</title>
+    <style>
+        .red {
+            color: red;
+        }
+        .font-bold {
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ message }} <br>
+        <button @click="changeMessage">Click</button> <br>
+        {{ updated }}
+
+        <br>
+
+        <!-- 인라인 스타일 바인딩 -->
+        <div :class="{red: isRed, 'font-bold': isBold}">Hello</div>
+        <button @click="update">Click</button>
+
+        <br>
+        <!-- 스타일 객체에 직접 바인딩 하여 템플릿을 간결하게 만듦 -->
+        <div :style="styleObject">Bye</div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: '헬로우',
+                updated: '바이',
+                isRed: false,
+                styleObject: {
+                    color: 'blue',
+                    fontSize: '30px'
+                }
+            },
+            methods: {
+                changeMessage() {
+                    this.message = '서강준';
+                },
+                update() {
+                    this.isRed = !this.isRed;
+                    this.isBold = !this.isBold;
+                }
+            },
+            computed: {
+                reversedMessage() {
+                    return this.message.split('').reverse().join('')
+                }
+            },
+            watch: {
+                message(newVal, oldVal) {
+                    console.log(newVal, oldVal);
+                    this.updated = '네';
+                }
+            }
+        })
+    </script>
+</body>
+</html>
