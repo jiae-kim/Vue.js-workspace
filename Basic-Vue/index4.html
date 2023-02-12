@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 기초 익히기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            {{ people[0].name }} {{ people[0].age }}
+        </div>
+        <div>
+            {{ people[1].name }} {{ people[1].age }}
+        </div>
+        <div>
+            {{ people[2].name }} {{ people[2].age }}
+        </div>
+
+        <hr>
+
+        <!-- 리스트 렌더링 : v-for 이용 
+            vue에서 개별 DOM노드들을 추적하고 기존 엘리먼트를 재사용, 재정렬하기 위해서 
+            v-for의 각 항목들에 고유한 key 속성을 제공
+            key에 대한 이상적인 값은 각 항목을 식별할 수 있는 고유한 ID (중복X)
+
+            key값으로 index를 사용하지 않는 이유 : 중간에 데이터가 삭제되면 index번호 달라짐
+            
+            <div v-for="item in items" v-bind:key="item.id">
+            </div>
+        -->
+
+        <div v-for="(person, index) in people" :key="person.id"> <!-- in 대신에 of 사용 가능 -->
+            {{ person.name }} {{ person.age }} {{ index }}
+        </div>
+
+        <hr>
+
+        <div>
+            <!-- {{ name }} 
+            <button @click="changeText">Click</button>
+
+            <hr> -->
+
+            <jay-button></jay-button>
+        </div>
+    </div>
+
+    <div id="app-1">
+        <!-- {{ name }}
+        <button @click="changeText">Click</button>
+
+        <hr> -->
+
+        <jay-button></jay-button>
+    </div>
+
+    <!-- 컴포넌트 
+        1. 전역등록
+            Vue.component(tagName, options)
+
+        2. 지역등록
+    -->
+    
+    <script>
+        // 전역등록 컴포넌트
+        Vue.component('hello-world', {
+            template: '<div>hello world</div>'
+        });
+
+        // Vue.component('jay-button', {
+        //     template: `
+        //     <div>
+        //         {{ name }} <br>
+        //         <hello-world></hello-world>
+        //         <button @click="changeText">Click</button>
+        //     </div>
+        //     `,
+        //     data() {// component 사용시 함수를 만들어 obj return해줌
+        //         return {
+        //             name: 'jaypark'
+        //         }
+        //     },
+        //     methods: {
+        //         changeText() {
+        //             this.name = 'jaypark updated';
+        //         }
+        //     }
+        // });
+
+        // 지역등록 컴포넌트
+        const HelloWorld = {
+            template: '<div>hello world</div>'
+        };
+
+        const JayButton = {
+            components: {
+                'hello-world': HelloWorld
+            },
+            template: `
+            <div>
+                {{ name }} <br>
+                <hello-world></hello-world>
+                <button @click="changeText">Click</button>
+            </div>
+            `,
+            data() {// component 사용시 함수를 만들어 obj return해줌
+                return {
+                    name: 'jaypark'
+                }
+            },
+            methods: {
+                changeText() {
+                    this.name = 'jaypark updated';
+                }
+            }
+        };
+
+
+        const app = new Vue({
+            el: '#app',
+            components: {
+                'jay-button': JayButton
+            },
+            data: {
+                people: [
+                    {id: 1, name: 'a', age: 20 },
+                    {id: 2, name: 'b', age: 21 },
+                    {id: 3, name: 'c', age: 22 },
+                    {id: 4, name: 'd', age: 23 }
+                ],
+                //name: 'jaypark1'
+            },
+            // methods: {
+            //     changeText() {
+            //         app1.name = 'jaypark1 updated';
+            //     }
+            // }
+        });
+
+        const app1 = new Vue({
+            el: '#app-1',
+            components: {
+                'jay-button': JayButton
+            },
+            // data: {
+            //     name: 'jaypark2'
+            // },
+            // methods: {
+            //     changeText() {
+            //         app.name = 'jaypark2 updated';
+            //     }
+            // }
+        });
+    </script>
+</body>
+</html>
