@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+<script>
+	Vue.component('component1', {
+		template : '<div>'
+				+  '<h3>첫 번째 h3태그 입니다</h3>'
+				+  '<h3>두 번째 h3태그 입니다</h3>'
+				+  '</div>'
+	})
+	
+	Vue.component('component2', {
+		template : '<h3>세 번째 h3태그 입니다</h3>'
+	})
+	
+	Vue.component('data_component', {
+		template : '<div>'
+				 + '<h3>데이터를 사용하는 템플릿</h3>'
+				 + '<h3>{{a1}}</h3>'
+				 + '<h3>{{a2}}</h3>'
+				 + '<h3>{{test_method1()}}</h3>'
+		         + '</div>',
+        data : function() {
+        	rtn_obj = {
+        		a1 : '문자열1',
+        		a2 : '문자열2'
+        	}
+        	
+        	return rtn_obj
+        },
+        
+        methods : {
+        	test_method1 : function() {
+        		return '메서드 호출'
+        	}
+        }
+	})
+	
+	window.onload = function() {
+		var test1 = new Vue({
+			el : '#test1'
+		})
+		
+		var test2 = new Vue({
+			el : '#test2'
+		})
+		
+		var test3 = new Vue({
+			el : '#test3',
+			components : {
+				// 내부에서만 사용할 컴포넌트 정의
+				'component3' : {
+					template : '<h3>네 번째 h3태그 입니다</h3>'
+				},
+				'component4' : {
+					template : '<h3>다섯 번째 h3태그 입니다</h3>'
+				}
+			}
+		})
+		
+		var test4 = new Vue({
+			el : '#test4',
+		})
+		
+		var a1 = 0
+		//var a1 = 10
+		
+		var test5 = new Vue({
+			el : '#test5',
+			components : {
+				'component5' : {
+					template : '<h3>여섯 번째 h3태그 입니다</h3>'
+				},
+				'component6' : {
+					template : '<h3>일곱 번째 h3태그 입니다</h3>'
+				}
+			},
+			data : function() {
+				if(a1 == 0) {
+					return {
+						view1 : 'component5',
+						view2 : 'component1'
+					}
+				} else {
+					return {
+						view1 : 'component6',
+						view2 : 'component2'
+					}
+				}
+			}
+			/*
+			data : {
+				view1 : 'component5',
+				view2 : 'component6'
+			}
+			*/
+		})
+	}
+</script>
+</head>
+<body>
+	<h1>Component</h1>
+	- Template을 보완하여 만든 요소 <br>
+	- Template은 순수 html 코드만을 가지고 있지만, Component는 html 템플릿과 더불어 데이터 셋팅, 함수 정의 등 다양한 작업을 할 수 있다 <br>
+	- Component는 Vue.js의 핵심 요소
+	
+	<hr/>
+	
+	<div id="test1">
+		<component1></component1>
+	</div>
+	
+	<hr/>
+	
+	<!-- 재사용 가능 --> 
+	<div id="test2">
+		<component1></component1>
+		<component2></component2>
+		<!--  
+		<component3></component3>
+		-->
+	</div>
+	
+	<hr/>
+	
+	<div id="test3">
+		<component1></component1>
+		<component2></component2>
+		<component3></component3>
+		<component4></component4>
+	</div>
+	
+	<hr/>
+	
+	<div id="test4">
+		<data_component></data_component>
+	</div>
+	
+	<hr/>
+	
+	<div id="test5">
+		<!--  
+		<component5></component5>
+		<component6></component6>
+		-->
+		<!-- 
+		<component v-bind:is='view1'></component>
+		<component v-bind:is='view2'></component>
+		-->
+		<component v-bind:is='view1'></component>
+		<component v-bind:is='view2'></component>
+	</div>
+	
+</body>
+</html>
