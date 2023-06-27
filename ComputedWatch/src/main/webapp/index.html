@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el : '#test1',
+			data : {
+				data1 : 'aaa',
+				data2 : 'bbb',
+				result1 : ''
+			},
+			// watch는 변수 하나를 감시하는 요소
+			watch : {
+				data1 : function() {
+					this.result1 = 'data1 : ' + this.data1 + ', data2 : ' + this.data2
+				},
+				data2 : function() {
+					this.result1 = 'data1 : ' + this.data1 + ', data2 : ' + this.data2
+				}
+			},
+			
+			// computed는 여러 변수를 감지할 수 있다 -> watch로 처리하는 다수의 코드를 computed 하나로 통합하여 사용
+			computed : {
+				result2 : function() {
+					return 'data1 : ' + this.data1 + ', data2 : ' + this.data2
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id='test1'>
+	<!--  
+		<h3>data1 : {{data1}}</h3>
+		<h3>data2 : {{data2}}</h3>
+	-->	
+		data1 : <input type='text' v-model='data1' /> <br/>
+		data2 : <input type='text' v-model='data2' /> <br/>
+		<h4>result1</h4>
+		<div>{{result1}}</div>
+		
+		<a>Watch 대신 Computed를 사용하면 반복된 코드를 하나로 통합할 수 있다</a>
+		<h4>result2</h4>
+		<div>{{result2}}</div>
+	</div>
+</body>
+</html>
