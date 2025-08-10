@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보간법</title>
+</head>
+<body>
+<!-- 
+    vue 인스턴스의 data옵션은 model 객체의 message값을 변경하면 즉시 화면을 갱신함
+    model을 변경하면 view model 역할을 수행하는 vue 인스턴스를 통해 즉시 ui 변경
+-->
+
+    <div id="app">
+        <h2>{{message}}</h2>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script type="text/javascript">
+        var model = {message : "Hello Vue3!!"};
+        var vm = Vue.createApp({
+            name : "App",
+            data() {
+                return model;
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

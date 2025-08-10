@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-model 디렉티브</title>
+</head>
+<body>
+<!-- 
+    lazy : 입력폼에서 다른 요소로 포커스가 이동하는 이벤트가 발생할 때 입력한 값을 데이터와 동기화
+    number : 수식어를 지정하면 숫자가 입력될 경우 number 타입의 값으로 자동 형변환되어 데이터 옵션 값으로 반영
+    trim : 문자열의 앞뒤 공백을 자동으로 제거
+-->
+    <div id="app">
+        <input type="text" v-model.trim.lazy="name">
+        <br/>
+        입력하신 이름 : <span>{{name}}</span>
+    </div>
+
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script type="text/javascript">
+        var vm = Vue.createApp({
+            name : "App",
+            data() {
+                return {name:""};
+            },
+        }).mount('#app')
+    </script>
+</body>
+</html>
